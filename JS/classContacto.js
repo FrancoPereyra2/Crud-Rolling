@@ -6,6 +6,7 @@ export class Contacto{
     #telefono;
     #github;
     #direccion;
+    #foto
     constructor(apellido, nombre, email, telefono, github, direccion){
         this.#id = crypto.randomUUID();
         this.#apellido = apellido;
@@ -14,6 +15,7 @@ export class Contacto{
         this.#telefono = telefono;
         this.#github = github;
         this.#direccion = direccion;
+        this.foto = foto
     }
 
     //agregar los get y set
@@ -59,6 +61,26 @@ export class Contacto{
     }
     set direccion(value) {
         this.#direccion = value;
+    }
+    get foto(){
+        return this.#foto
+    }
+    set foto(value){
+        this.#foto = value
+    }
+
+    //metodo para que funcione el JSON.stringify de js
+    toJSON(){
+        return {
+            id: this.id,
+            apellido: this.apellido,
+            nombre: this.nombre,
+            email: this.email,
+            telefono: this.telefono,
+            github: this.github,
+            direccion: this.direccion,
+            foto: this.foto
+        }
     }
 }
 
