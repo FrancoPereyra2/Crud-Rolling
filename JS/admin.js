@@ -14,7 +14,11 @@ const foto = document.getElementById("foto");
 const github = document.getElementById("github"),//forma de usar un solo const en lugar de usar varios
  direccion = document.getElementById("direccion"),
  telefono = document.getElementById("telefono");
-const listaContactos = []
+//verificar si hay datos en el localStorage, si hay los traigo sino que sea un array vacio
+//JSON.parse = le quita las ""
+// si no hay nada el || me trae un array vacio
+const listaContactos = JSON.parse(localStorage.getItem('listaContactosKey')) || []
+
 //funciones
 const mostrarModal = () => {
   modalContacto.show();
