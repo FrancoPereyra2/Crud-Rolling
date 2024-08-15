@@ -37,6 +37,8 @@ const crearContacto = (e) => {
   limpiarFormulario()
   //guardar el array en localstorage
   guardarLocalStorage()
+  //dibujar la fila en la tabla
+  dibujarFila(nuevoContacto)
 };
 
 // para formularios pequeños
@@ -56,6 +58,31 @@ const guardarLocalStorage = () =>{
     localStorage.setItem('listaContactosKey', JSON.stringify(listaContactos))
 }
 
+const cargaInicial = () =>{
+    //preguntar si hay datos en el array
+    if(listaContactos.length != 0){
+        //dibujar una fila en la tabla
+        listaContactos.map((contacto)=> dibujarFila(contacto))
+    }
+}
+
+const dibujarFila = (contacto) =>{
+    const tabla = document.querySelector('tbody')
+    tabla.innerHTML += `<tr>
+                    <td>${contacto.id}</td>
+                    <td>${contacto.apellido}</td>
+                    <td>${contacto.nombre}</td>
+                    <td>${contacto.email}</td>
+                    <td>
+                        <button class="btn btn-primary">Ver</button>
+                        <button class="btn btn-warning">Editar</button>
+                        <button class="btn btn-danger">Eliminar</button>
+                    </td>
+                  </tr>`
+}
+
 //aqui agrego la logica del CRUD
 btnNuevo.addEventListener("click", mostrarModal);
 formularioContacto.addEventListener("submit", crearContacto);
+
+cargaInicial()
