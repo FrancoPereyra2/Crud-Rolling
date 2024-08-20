@@ -75,7 +75,7 @@ const dibujarFila = (contacto) =>{
                     <td>${contacto.email}</td>
                     <td>
                         <button class="btn btn-primary">Ver</button>
-                        <button class="btn btn-warning">Editar</button>
+                        <button class="btn btn-warning" onclick="editarContacto('${contacto.id}')">Editar</button>
                         <button class="btn btn-danger" onclick="borrarContacto('${contacto.id}')">Eliminar</button>
                     </td>
                   </tr>`
@@ -116,6 +116,23 @@ window.borrarContacto = (id) =>{
   });
 }
 
+window.editarContacto = (id) =>{
+  console.log('desde editarContacto')
+
+  const contacto = listaContactos.find(contacto => contacto.id === id);
+  if(contacto){
+    document.getElementById('apellido').value = contacto.apellido;
+    document.getElementById('nombre').value = contacto.nombre;
+    document.getElementById('email').value = contacto.email;
+    document.getElementById('telefono').value = contacto.telefono;
+    document.getElementById('foto').value = contacto.foto;
+    document.getElementById('github').value = contacto.github;
+    document.getElementById('direccion').value = contacto.direccion;
+    mostrarModal()
+  }
+  guardarLocalStorage()
+  
+}
 
 
 //aqui agrego la logica del CRUD
