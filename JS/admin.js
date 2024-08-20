@@ -18,6 +18,7 @@ const github = document.getElementById("github"),//forma de usar un solo const e
 //JSON.parse = le quita las ""
 // si no hay nada el || me trae un array vacio
 const listaContactos = JSON.parse(localStorage.getItem('listaContactosKey')) || []
+const tabla = document.querySelector('tbody')
 
 //funciones
 const mostrarModal = () => {
@@ -67,7 +68,6 @@ const cargaInicial = () =>{
 }
 
 const dibujarFila = (contacto) =>{
-    const tabla = document.querySelector('tbody')
     tabla.innerHTML += `<tr>
                     <td>${contacto.id}</td>
                     <td>${contacto.apellido}</td>
@@ -76,10 +76,47 @@ const dibujarFila = (contacto) =>{
                     <td>
                         <button class="btn btn-primary">Ver</button>
                         <button class="btn btn-warning">Editar</button>
-                        <button class="btn btn-danger">Eliminar</button>
+                        <button class="btn btn-danger" onclick="borrarContacto('${contacto.id}')">Eliminar</button>
                     </td>
                   </tr>`
 }
+
+window.borrarContacto = (id) =>{
+  console.log(id)
+  Swal.fire({
+    title: "¿Estas seguro de borrar el contacto?",
+    text: "No puedes revertir este proceso, luego de borrar.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //aqui agrego mi logica
+      //* splice = borra elemento en el medio del array y agrega tambien elementos
+      //* pop = la utlima posicion
+      //1- buscar la posicion del elemento que quiero borrar findIndex
+      const posicionContactoBuscado = listaContactos.findIndex((contacto)=> contacto.id === id)
+      console.log(posicionContactoBuscado)
+      //2- borrar un contacto con el splace, la posicion del elemento a borrar
+      listaContactos.splice(posicionContactoBuscado, 1)
+      //3- actualizar el localStorage
+      guardarLocalStorage()
+      //4- actializar la tabla
+      console.log(tabla.children[posicionContactoBuscado])
+      tabla.removeChild(tabla.children[posicionContactoBuscado])
+      Swal.fire({
+        title: "Contacto Eliminado",
+        text: "El contacto fue eliminado correctamente.",
+        icon: "success"
+      });
+    }
+  });
+}
+
+
 
 //aqui agrego la logica del CRUD
 btnNuevo.addEventListener("click", mostrarModal);
