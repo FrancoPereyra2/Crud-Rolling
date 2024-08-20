@@ -84,7 +84,7 @@ const dibujarFila = (contacto) => {
                     <td>${contacto.nombre}</td>
                     <td>${contacto.email}</td>
                     <td>
-                        <button class="btn btn-primary">Ver</button>
+                        <button class="btn btn-primary" onclick="verDetalle('${contacto.id}')">Ver</button>
                         <button class="btn btn-warning" onclick="prepararEditarContacto('${contacto.id}')">Editar</button>
                         <button class="btn btn-danger" onclick="borrarContacto('${contacto.id}')">Eliminar</button>
                     </td>
@@ -144,6 +144,10 @@ window.prepararEditarContacto = (id) => {
     direccion.value = encontrarContacto.direccion;
   }
 };
+
+window.verDetalle = (id) =>{
+  window.location.href ="/Pages/detalleContacto.html?id="+id
+}
 
 const administrarContacto = (e) =>{
   e.preventDefault()
