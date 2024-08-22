@@ -1,4 +1,5 @@
 import { Contacto } from "./classContacto.js";
+import { validarCantidadCaracteres, validarEmail } from "./validaciones.js";
 
 //declaro las variables
 const modalContacto = new bootstrap.Modal(
@@ -31,14 +32,15 @@ const crearContacto = () => {
   //aqui digo que quiero crear un contacto
   estoyCreando = true;
   //debo validar los datos del formulario
-  //crear el objeto (se usa el new)
+  if(validarCantidadCaracteres(apellido, 3, 50) && (validarCantidadCaracteres(nombre, 2, 30)) && validarEmail(email)){
+    //crear el objeto (se usa el new)
   const nuevoContacto = new Contacto(
-    apellido.value,
-    nombre.value,
+    apellido.value.trim(),
+    nombre.value.trim(),
     email.value,
     telefono.value,
     github.value,
-    direccion.value,
+    direccion.value.trim(),
     foto.value
   );
   console.log(nuevoContacto);
@@ -50,6 +52,10 @@ const crearContacto = () => {
   guardarLocalStorage();
   //dibujar la fila en la tabla
   dibujarFila(nuevoContacto);
+  }else{
+    console.log('hay errores en la carga del formulario')
+  }
+  
 };
 
 // para formularios pequeños
